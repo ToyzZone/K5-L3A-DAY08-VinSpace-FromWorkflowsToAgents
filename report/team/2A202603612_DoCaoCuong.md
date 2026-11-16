@@ -23,7 +23,8 @@
 - `751d094`: thêm `src/reports/benchmark.json` và `src/reports/crash.json`.
 - `b5b63e2`: thêm `src/reports/ablation_seeds.json` và `src/tests/test_reports_artifacts.py`.
 - `6dc9159`: điền ADR, bảng thành viên và đóng góp trong `TEAM.md`, research card.
-- Commit điền `group_report.md` và báo cáo này (hash ghi sau khi commit).
+- `137f87c`: điền `group_report.md` và báo cáo này.
+- `c1b70aa`: thêm `src/reports/hidden_selfcheck.json`, cập nhật ADR và các báo cáo.
 
 **Test đã thêm:** `src/tests/test_reports_artifacts.py` (4 test):
 
@@ -40,7 +41,7 @@
 
 ## 4. Bằng chứng
 
-- Commit: `751d094`, `b5b63e2`, `6dc9159` trên nhánh `cuong/ledger-eval-reports`.
+- Commit: `751d094`, `b5b63e2`, `6dc9159`, `137f87c`, `c1b70aa` trên nhánh `cuong/ledger-eval-reports`.
 - `python -m lab8.crash_test --count 20 --out reports/crash.json`: `crash_safety 20/20`.
 - `python -m lab8.benchmark --shapes workflow,single,orchestrator,swarm --cases data/public_claims.jsonl --seeds 11,22,33,44,55 --out reports/benchmark.json`:
 
