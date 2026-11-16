@@ -23,7 +23,13 @@ Không. Orchestrator có pass bằng single (1.000) nhưng cost cao hơn khoản
 
 ## Trace và bằng chứng
 
-Trace của nhóm ghi những event nào? Field nào cố ý **không** ghi, và vì sao? Nếu trace nằm ngoài chỗ scanner quét được, đội security chứng minh thế nào là hệ thống không lộ secret?
+Nhóm dùng `lab8.trace.Trace` có sẵn, nên mọi nhánh return (kể cả `needs_info`, `escalated`, `failed`) đều ghi file JSON có `run_id` khớp và `events` là list.
+
+**Shape `single` ghi các event:** `react_step` (chỉ tên tool), `order` (chỉ các trường trong allowlist `ORDER_FIELDS`), `quote` (kết quả `compute_compensation`), `crash` (điểm crash khi có `InjectedCrash`) và `decision` (`status`, `proposal_amount`, `reason`). `workflow` ghi `claim_lookup` (chỉ cờ `found`), `order_lookup` (chỉ cờ `visible`), `quote` (chỉ `proposal_amount`), `refund_requested` và `decision`. `orchestrator` ghi `claim_view`, `handoff` (đã sanitize bằng allowlist, không ghi parent context), `investigator`, `quote`, `refund_outcome`, `crash` và `decision`.
+
+**Cố ý không ghi:** claim row nguyên, `parent_secret`, header thô, nội dung ticket, SĐT, địa chỉ, tên hàng, ghi chú nội bộ. Lý do: grader quét trace và mọi file `<run_id>*` cùng thư mục để tìm secret và PII, nên trace là ranh giới bảo mật chứ không phải log debug. Ticket là dữ liệu người dùng, có thể chứa chuỗi bất kỳ. Vì vậy `react_step` chỉ ghi tên tool, không ghi kết quả tool. Shape đọc hồ sơ qua `get_claim_view` thay vì `SELECT *` để dữ liệu nhạy cảm không vào luồng xử lý.
+
+**Bằng chứng không lộ secret:** trace nằm trong `traces/`, đúng chỗ scanner quét, và không có file debug nào khác ngoài trace. Số đo: 70/70 trial `single` trên bộ public qua tiêu chí chấm (gồm quét chuỗi cấm trong trace, mọi file `<run_id>*` và kết quả). Tự kiểm hidden: 0 `leak_suspect` và 0 trace sai contract trên 600 trial (`src/reports/hidden_selfcheck.json`). Test: `test_handoff_secret.py`, `test_trace_contract.py`, `test_orchestrator_shape.py`. `CANARY_SECRET_*` chỉ xuất hiện trong `data/public_claims.jsonl` (đầu vào), không xuất hiện trong `reports/` hay `traces/`.
 
 ## Giới hạn
 
