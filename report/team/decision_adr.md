@@ -27,4 +27,4 @@ Trace của nhóm ghi những event nào? Field nào cố ý **không** ghi, và
 
 ## Giới hạn
 
-Số liệu trên bộ public 14 claim, chưa chạy hidden. Pass 1.000 trên public không đảm bảo qua ngưỡng 0.75 trên hidden. MockLLM không phải model sản xuất. Latency để `unavailable`. Không sửa JSON cho đủ 0.75.
+Pass rate chỉ đo được trên bộ public 14 claim. Nhóm đã chạy tự kiểm trên `student_drop/` (40 claim không nhãn × 5 seed × 3 shape, `src/reports/hidden_selfcheck.json`): 0 trial lỗi, 0 `leak_suspect`, 0 trace sai contract, ba shape cho cùng quyết định ở 200/200 trial; cost mô phỏng single 6929.1, workflow 7050.0, orchestrator 11943.3 VND (cùng thứ hạng như bộ public). Bộ này không có nhãn nên không có pass rate; điểm hidden chính thức do grader của giảng viên chấm. Pass 1.000 trên public không đảm bảo qua ngưỡng 0.75 trên hidden. MockLLM không phải model sản xuất. Latency để `unavailable`. Không sửa JSON cho đủ 0.75.

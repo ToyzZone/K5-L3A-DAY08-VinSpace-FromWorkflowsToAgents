@@ -35,7 +35,7 @@
 **Quyết định kỹ thuật:**
 
 - Chọn R4 cho research card, vì hợp với vai Evaluation. Biến duy nhất đổi là bộ seed. Dùng `12,23,34,46,57`, không seed nào chia hết cho 5. Lần đầu dùng `45` nên chưa thấy thay đổi; xem mục 5 của báo cáo nhóm.
-- Chọn `single` trong ADR, vì cost/success thấp nhất (33.41 VND mô phỏng) và công sức triển khai thấp. Ghi rõ trong ADR rằng chênh lệch với `workflow` chỉ khoảng 2.6%, và số liệu mới ở bộ public, chưa có hidden.
+- Chọn `single` trong ADR, vì cost/success thấp nhất (33.41 VND mô phỏng) và công sức triển khai thấp. Ghi rõ trong ADR rằng chênh lệch với `workflow` chỉ khoảng 2.6%, và pass rate mới đo được ở bộ public (hidden tự kiểm không có nhãn).
 - Không ghi `0` cho secret leak và approval bypass khi chưa kiểm. Trước khi ghi đã kiểm: `CANARY_SECRET` chỉ xuất hiện trong `data/public_claims.jsonl` (dữ liệu đầu vào), 70/70 trial `single` qua tiêu chí chấm, và 20 test về secret, authorization, approval, trace contract xanh.
 
 ## 4. Bằng chứng
@@ -53,6 +53,7 @@
 
 - Ablation: `python -m lab8.benchmark ... --seeds 12,23,34,46,57 --out reports/ablation_seeds.json`: swarm lên 1.000 / 1.000 / 0.
 - `python -m pytest -q -m student -o addopts=`: 248 passed. `python -m pytest -q`: 113 passed.
+- `python -m lab8.benchmark --shapes workflow,single,orchestrator --cases ../student_drop/hidden_claims.jsonl --world ../student_drop/hidden_world_state.json --out reports/hidden_selfcheck.json`: 600 trial, 0 lỗi, 0 `leak_suspect`, 0 trace sai.
 - `python -m lab8.check_submission`: `0 FAIL`.
 
 ## 5. Công cụ AI đã dùng
@@ -75,7 +76,7 @@
 
 **Còn yếu**
 
-- Chưa chạy tự kiểm hidden trên `student_drop/`. Pass 1.000 chỉ đúng trên bộ public 14 claim với MockLLM, nên lý do chọn `single` (cost thấp nhất, chênh `workflow` khoảng 2.6%) chưa được kiểm trên hidden.
+- Tự kiểm hidden (`student_drop/`, không nhãn) sạch: 0 lỗi, 0 `leak_suspect`, 0 trace sai, nhưng không đo được độ đúng. Pass 1.000 chỉ đo được trên bộ public 14 claim với MockLLM, nên lý do chọn `single` (cost thấp nhất, chênh `workflow` khoảng 2.6%) chưa được kiểm bằng nhãn hidden.
 - Không viết shape nào. Phần đóng góp code của mình là test và báo cáo, ít hơn ba bạn viết shape.
 - `crash_test` kiểm lớp host chứ không kiểm từng shape, nên mình chỉ dựa vào T11, T12 để nói shape truyền `crash_at` đúng. Chưa viết test riêng cho việc này.
 - Ablation chỉ đổi một biến. Chưa thử prompt hay tool.
@@ -83,6 +84,6 @@
 
 **Sẽ làm khác nếu có thêm thời gian**
 
-- Chạy tự kiểm hidden và cập nhật ADR nếu số liệu khác.
+- Chờ điểm hidden chính thức của giảng viên và cập nhật ADR nếu kết quả làm đảo quyết định.
 - Thêm ablation thứ hai đổi biến khác (ví dụ thứ tự claim) để tách thêm nhiễu.
 - Viết test kiểm từng shape truyền `crash_at` vào `issue_refund`.
