@@ -52,7 +52,15 @@ Nguồn: `src/reports/benchmark.json` (14 claim × 5 seed `11,22,33,44,55` = 70 
 
 **Ablation (R4,** `src/reports/ablation_seeds.json`**):** đổi bộ seed sang `12,23,34,46,57` (không seed nào chia hết cho 5), giữ nguyên mọi thứ khác. Swarm lên pass 1.000, pass^5 1.000, variance 0. Ba shape của nhóm không đổi. Thứ hạng cost giữ nguyên. Vậy chênh lệch pass của swarm trên bộ public đến từ seed 55 (ticket ghi 5 ngày, order ghi 2 ngày ở C-002), không phải từ topology. Trên bộ public, chỉ cost phân biệt được các shape.
 
-**Tự kiểm trên** `student_drop/`**:** chưa làm (thư mục chưa có trong repo).
+**Tự kiểm trên `student_drop/`** (`src/reports/hidden_selfcheck.json`, 40 claim không nhãn × 5 seed × 3 shape = 200 trial mỗi shape):
+
+| Shape | Trial lỗi | `leak_suspect` | Trace sai | Mean / p95 steps | Cost mô phỏng (VND) |
+| --- | --- | --- | --- | --- | --- |
+| workflow | 0 | 0 | 0 | 4.53 / 5.0 | 7050.0 |
+| single | 0 | 0 | 0 | 5.75 / 6.0 | 6929.1 |
+| orchestrator | 0 | 0 | 0 | 4.88 / 5.0 | 11943.3 |
+
+Cả ba shape cho cùng quyết định ở 200/200 trial (95 `denied`, 90 `resolved`, 10 `escalated`, 5 `needs_info`). Bộ này không có nhãn nên không có pass rate; điểm chính thức do grader của giảng viên chấm.
 
 Quyết định kiến trúc và lý do: xem `report/team/decision_adr.md`. Phiếu nghiên cứu và ablation: xem `report/team/research_card.md`.
 
@@ -71,7 +79,7 @@ Chi tiết đóng góp của từng thành viên nằm trong `TEAM.md` (bảng �
 
 MockLLM không phải model sản xuất; latency là `unavailable`; cost là mô phỏng.
 
-- Số liệu là trên bộ public 14 claim. Pass 1.000 không đảm bảo qua ngưỡng 0.75 trên 40 hidden claim × 5 seed. Nhóm chưa chạy hidden.
+- Số liệu là trên bộ public 14 claim. Pass 1.000 không đảm bảo qua ngưỡng 0.75 trên 40 hidden claim × 5 seed. Tự kiểm hidden chỉ cho biết shape chạy hết claim không lỗi, trace đúng contract và không nghi lộ secret; không đo được độ đúng vì không có nhãn.
 - Ba shape của nhóm ngang nhau về pass, nên chọn `single` dựa vào cost (33.41, thấp nhất) và công sức triển khai. Chênh lệch với workflow chỉ khoảng 2.6%.
 - Kết luận đổi nếu trên hidden `single` dưới 0.75 hoặc pass^5 thấp rõ rệt mà orchestrator giữ được, hoặc nếu có loại claim cần tách quyền đọc/ghi giữa các agent.
 - Ablation chỉ đổi một biến (seed). Chưa kiểm các biến nhiễu khác (prompt, tool).
