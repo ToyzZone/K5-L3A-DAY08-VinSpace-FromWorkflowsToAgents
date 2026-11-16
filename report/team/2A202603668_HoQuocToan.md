@@ -6,15 +6,15 @@ Ví dụ: `20241234_NguyenVanAn.md`.
 
 ## 1. Thông tin thành viên
 
-- Họ tên:
-- MSSV:
-- Email:
-- GitHub:
+- Họ tên: Hồ Quốc Toản
+- MSSV:2A202603668
+- Email:26ai.toanhq@vinuni.edu.vn
+- GitHub:https://github.com/ToyzZone/K5-L3A-DAY08-VinSpace-FromWorkflowsToAgents.git
 
 ## 2. Phần việc phụ trách
 
 Shape, module hoặc phần báo cáo bạn phụ trách.
-
+- hoàn thành file workflow.py
 ...
 
 ## 3. Đóng góp cụ thể
