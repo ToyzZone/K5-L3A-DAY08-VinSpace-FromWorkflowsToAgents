@@ -1,16 +1,26 @@
 # Lab 8 — LogiX-VN: một task, bốn kiến trúc
 
-AI20K ngày 8. Bài toán: xử lý claim hoàn phí vận chuyển. Dữ liệu là dữ liệu giả. Không cần GPU, API key hay internet trong giờ lab. Chạy được trên Windows, macOS và Linux.
+**Bài nhóm.** AI20K ngày 8, buổi lab 4 giờ (13:30 đến 17:30). Bài toán: xử lý claim hoàn phí vận chuyển. Dữ liệu là dữ liệu giả. Không cần GPU, API key hay internet trong giờ lab. Chạy được trên Windows, macOS và Linux.
 
 **Mục tiêu:** dựa trên số đo, chọn kiến trúc **ít tự chủ nhất mà vẫn làm được việc**. Workflow và multi-agent phải được so trên cùng claim, cùng seed, cùng bảng giá mô phỏng. Không mặc định multi-agent tốt hơn.
 
 Repo này là starter. Các phần đã chạy được ngay: swarm tham chiếu, world, MockLLM, host (policy, ledger, handoff). Ba shape còn lại do nhóm viết.
 
+## Tài liệu của lab
+
+| File | Nội dung |
+| --- | --- |
+| [`CHECKPOINTS.md`](CHECKPOINTS.md) | Mốc M0 đến M4: nhiệm vụ, sản phẩm, tự kiểm tra |
+| [`RUBRIC.md`](RUBRIC.md) | 100 điểm, must-pass, bonus |
+| [`SUBMISSION.md`](SUBMISSION.md) | Đặt tên repo, cấu trúc nộp, deadline, nộp LMS |
+| [`RULES.md`](RULES.md) | AI, hợp tác, nộp muộn, bí mật |
+| [`TEAM.md`](TEAM.md) | Thành viên nhóm và mục cá nhân |
+
 ## Mục lục
 
 1. [Việc nhóm nộp](#việc-nhóm-nộp)
 2. [Luật nghiệp vụ](#luật-nghiệp-vụ-synthetic)
-3. [Cài đặt theo hệ điều hành](#cài-đặt-theo-hệ-điều-hành)
+3. [Chuẩn bị: cài đặt theo hệ điều hành](#chuẩn-bị-cài-đặt-theo-hệ-điều-hành)
 4. [Các lệnh trong buổi lab](#các-lệnh-trong-buổi-lab)
 5. [Hai bộ test](#hai-bộ-test)
 6. [Lịch, rubric, điểm cộng](#lịch-buổi-lab)
@@ -67,7 +77,7 @@ Ví dụ public:
 
 Tiền do code tính: `lab8.tools.compute_compensation` / `lab8.compensation.quote`. Không để MockLLM quyết số tiền.
 
-## Cài đặt theo hệ điều hành
+## Chuẩn bị: cài đặt theo hệ điều hành
 
 Cần **Python 3.11, 3.12 hoặc 3.13** và `git`. Mọi lệnh chạy tại **thư mục gốc repo** (thư mục có file `README.md` này).
 
@@ -196,7 +206,7 @@ Khung báo cáo: `docs/architecture.md`, `docs/decision_adr.md`, `docs/research_
 | Reproducibility | 10 |
 | Đóng góp | 5 |
 
-Tiêu chí chi tiết của từng hạng mục nằm trong lab guide.
+Bằng chứng giảng viên đọc cho từng hạng mục, must-pass và phần không được tính: [`RUBRIC.md`](RUBRIC.md).
 
 ### Điểm cộng (tối đa +10, tổng tối đa 110, tính theo nhóm)
 
@@ -211,7 +221,7 @@ Sáu topic mở rộng, mỗi topic lấy từ một nghiên cứu trong bài l�
 | B5 Provider idempotency và reconciliation | DBOS durable workflows |
 | B6 Investigator từ xa theo kiểu A2A | A2A v1.0; ProtocolBench, ICML 2026 |
 
-Bonus chỉ được tính khi shape nhóm chọn đã qua cả 3 must-pass **và** đạt pass rate hidden **≥ 0.80** (cao hơn ngưỡng 0.75 của bài chính).
+Bonus là điểm lab, không phải điểm pitching hay phát biểu. Bonus chỉ được tính khi shape nhóm chọn đã qua cả 3 must-pass **và** đạt pass rate hidden **≥ 0.80** (cao hơn ngưỡng 0.75 của bài chính).
 
 ## File nên đọc trước khi code
 
@@ -289,6 +299,7 @@ Thứ tự nộp:
 2. Chạy benchmark và crash test (lệnh ở bảng trên) để tạo `reports/benchmark.json`, `reports/crash.json`.
 3. Commit, rồi chạy `git rev-parse --short HEAD`. Ghi hash và run id vào `docs/decision_adr.md`, rồi commit tiếp.
 4. `python -m lab8.check_submission` ra `0 FAIL`, rồi push.
+5. Mỗi thành viên tự nộp link repo nhóm lên LMS. Tên repo và deadline (GMT+7): [`SUBMISSION.md`](SUBMISSION.md).
 
 Không sửa tay file JSON trong `reports/`. Giảng viên chạy lại đúng các lệnh đó.
 
